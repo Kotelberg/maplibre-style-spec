@@ -111,7 +111,8 @@ function validSchema(k, v, obj, ref, version, kind) {
         'period',
         'requires',
         'sdk-support',
-        'overridable'
+        'overridable',
+        'experimental'
     ];
 
     // Schema object.

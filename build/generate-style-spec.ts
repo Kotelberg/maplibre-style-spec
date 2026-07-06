@@ -159,6 +159,14 @@ function layerType(key) {
         return objectType(spec[`layout_${key}`], '    ');
     };
 
+    // NOTE: `background` is the only sourceless layer type and MUST remain the
+    // last entry in `v8.json`'s `layer.type.values`. This function mutates one
+    // shared `layer` object across type iterations: on the `background` pass it
+    // deletes `layer.source`, and every other pass dereferences `layer.source`
+    // (`layer.source.required = true`). Because the iteration order follows the
+    // enum order, any type declared AFTER `background` would run the `else`
+    // branch against the already-deleted `source` and throw. New layer types
+    // (e.g. `model`) are therefore added before `background` in the enum.
     if (key === 'background') {
         delete layer.source;
         delete layer['source-layer'];
